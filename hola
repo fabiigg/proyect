@@ -1,1 +1,57 @@
-fgfffd
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+int obtenerRandomNumber(void);
+void inicializaRandom(void); 
+
+int main(void) {
+  int numjugadores, numganador, ganador_indice = -1;
+  char jugadores[100][10], numero[100][10];
+  inicializaRandom();
+printf("bienvenido al juego de del numero mas cercas \n");
+  printf("para jugar ingrese un numero del 1 al 100\n");
+  printf("cuantos jugadores son?\n");
+  scanf("%i",&numjugadores);
+  for(int i=0;i<numjugadores;i++)
+    {
+      printf("nombre del jugador\n");
+      scanf("%s",&jugadores[i][0]);            
+    }
+  for(int i=0;i<numjugadores;i++){
+    printf("jugador %s ingrese un numero\n",&jugadores[i][0]);
+    scanf("%s",&numero[i][0]);
+  }
+  numganador = obtenerRandomNumber();
+printf("el numero ganador es %i\n",numganador);
+  // if(numganador){
+  // printf("el numero ganador es el numero ingresado por el jugador %s\n)",&jugadores[numganador][0]);
+  //}
+   int distancia_minima = 101;
+   for (int i = 0; i < numjugadores; i++) {
+   int numero_jugador = atoi(numero[i]);
+   int distancia = abs(numganador - numero_jugador);
+
+   if (distancia < distancia_minima) {
+          distancia_minima = distancia;
+          ganador_indice = i;
+     }
+  }
+
+  if (ganador_indice != -1) {
+      printf("El ganador es el jugador %s con el número %s, que estaba a %d unidades del número ganador.\n",
+             jugadores[ganador_indice], numero[ganador_indice], distancia_minima);
+  } else {
+      printf("Nadie ha ganado esta vez.\n");
+  }
+      
+  return 0;  
+}
+void inicializaRandom(void){
+time_t semilla;
+  semilla = time(NULL);
+  srand(semilla); 
+}
+int obtenerRandomNumber(void){
+  return (rand()%101);
+}
+
